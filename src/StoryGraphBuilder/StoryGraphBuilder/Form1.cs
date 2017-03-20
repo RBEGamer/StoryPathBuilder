@@ -52,7 +52,9 @@ namespace StoryGraphBuilder
         //ADD OPTION
         private void button2_Click(object sender, EventArgs e)
         {
-
+            node n = new option_node();
+            (n as option_node).generate_propery_plane();
+            node_to_set = n;
         }
         //REMOVE NODE
         private void button3_Click(object sender, EventArgs e)

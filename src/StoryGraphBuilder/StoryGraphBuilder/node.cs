@@ -20,6 +20,8 @@ namespace StoryGraphBuilder
         public String headline_text = "---";
         public String message_text = "---";
 
+        protected int con_box_size = 10;
+        protected int text_bumbruch_zeichen_line = 30; //new line >30 chars
 
         /*---------------------------------------------------*/
         public  node()
@@ -37,6 +39,9 @@ namespace StoryGraphBuilder
 
     public class text_node : node
     {
+
+        const int text_bumbruch_zeichen_line = 40;
+        const int con_box_size = 10;
         public  text_node()
         {
             render_panel = new Panel();
@@ -49,9 +54,6 @@ namespace StoryGraphBuilder
 
             int size_w = 200;
             int size_h = 0;
-            int text_bumbruch_zeichen_line = 40;
-            int con_box_size = 10;
-
 
             //CREATE PANEL BOX
             render_panel.Controls.Clear();
@@ -162,15 +164,12 @@ namespace StoryGraphBuilder
 
             int size_w = 200;
             int size_h = 0;
-            int text_bumbruch_zeichen_line = 40;
-            int con_box_size = 10;
-
-
+            
             //CREATE PANEL BOX
             render_panel.Controls.Clear();
             render_panel.Location = new Point(pos_x, pos_y);
             render_panel.Size = new Size(size_w, size_h);
-            render_panel.BackColor = Color.PaleVioletRed;
+            render_panel.BackColor = Color.LightGoldenrodYellow;
             //CREATE BUBBLE INPUT
             Panel con_box_in = new Panel();
             con_box_in.Size = new Size(con_box_size, con_box_size);
@@ -212,22 +211,6 @@ namespace StoryGraphBuilder
                 render_panel.Controls.Add(seperation_line_head_1);
                 size_h += 5;
             }
-
-
-            //CREATE TEXT BOX
-            Label message_text_l = new Label();
-            message_text_l.Text = message_text;
-            int me_w = (int)(message_text.Length * 12);
-            int me_h = (int)((message_text_l.Font.SizeInPoints * 2f) * (1 + message_text.Length / text_bumbruch_zeichen_line));
-            if (me_w > size_w) { me_w = size_w; }
-            message_text_l.Size = new Size(me_w, me_h);
-            message_text_l.Location = new Point(0, size_h); //offset from box
-            size_h += me_h; //increase box size
-            message_text_l.Enabled = true;
-            render_panel.Controls.Add(message_text_l);
-
-
-
             //CREATE LINE
             {
                 size_h += 2;
