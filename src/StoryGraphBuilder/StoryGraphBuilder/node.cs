@@ -17,14 +17,16 @@ namespace StoryGraphBuilder
         public UInt32 id;
         public String node_name;
         public Panel render_panel;
-        public String headline_text = "-TEXTNODE-";
-        public String message_text = "-ENTER_YOUR_TEXT_HERE-";
+        public String headline_text = "---";
+        public String message_text = "---";
 
 
         /*---------------------------------------------------*/
         public  node()
         {
             render_panel = new Panel();
+            headline_text = "-NODE-";
+            message_text = "---";
         }
 
 
@@ -38,6 +40,8 @@ namespace StoryGraphBuilder
         public  text_node()
         {
             render_panel = new Panel();
+            headline_text = "-TEXTNODE-";
+            message_text = "---";
         }
 
         public  void generate_propery_plane()
@@ -149,6 +153,8 @@ namespace StoryGraphBuilder
         public option_node()
         {
             render_panel = new Panel();
+            headline_text = "-OPTIONNODE-";
+            message_text = "---";
         }
 
         public void generate_propery_plane()
