@@ -9,7 +9,7 @@ using System.Drawing;
 namespace StoryGraphBuilder
 {
 
-  
+  //FOR TEST THE MOST IS PUBLIC FOR THE XML EXPORT
     public class node
     {
 
@@ -169,6 +169,20 @@ namespace StoryGraphBuilder
 
 
 
+
+
+    public class option_node_options
+    {
+
+        public String _option_text;
+        public option_node _ref_node;
+        public option_node _ref_node_dest;
+        public int dest_node_id;
+        public option_node_options()
+        {
+            dest_node_id = -1;
+        }
+    }
     public class option_node : node
     {
 
@@ -180,11 +194,44 @@ namespace StoryGraphBuilder
         Panel con_box_in = new Panel();
 
 
+        public List<option_node_options> options = new List<option_node_options>();
+
+        public void add_option(String _text)
+        {
+            if(_text == "") { return; }
+            bool is_in = false;
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (options[i]._option_text == _text)
+                {
+                    return;
+                }
+            }
+            option_node_options op_tmp = new option_node_options();
+            op_tmp._option_text = _text;
+            op_tmp._ref_node = this;
+            options.Add(op_tmp);
+        }
+
+        public void remove_option(String _text) {
+            if (_text == "") { return; }
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (options[i]._option_text == _text)
+                {
+                    options.RemoveAt(i);
+                    return;
+                }
+            }
+
+        }
+
         public option_node()
         {
             render_panel = new Panel();
             headline_text = "-OPTIONNODE-";
             message_text = "---";
+            options.Clear();
 
              con_box_out = new Panel();
              seperation_line_message = new Panel();
@@ -256,7 +303,14 @@ namespace StoryGraphBuilder
                 size_h += 5;
             
 
-            //CREATE BUBBLE INPUT
+            //CREATE BUBBLE OUTPUT
+
+
+            //for every node
+            //add panel
+            //max text width 10
+            //add bubble
+            //add bubble id
 
             con_box_out.Size = new Size(con_box_size, con_box_size);
             con_box_out.Location = new Point((int)(size_w / 2f), size_h);
