@@ -20,11 +20,11 @@ namespace StoryGraphBuilder
         public String headline_text = "---";
         public String message_text = "---";
 
-
-       
+        public Panel parameter_panel = null;
+        public Panel display_panel = null;
 
         protected int con_box_size = 10;
-        protected int text_bumbruch_zeichen_line = 30; //new line >30 chars
+        protected int text_bumbruch_zeichen_line = 5; //new line >30 chars
 
         /*---------------------------------------------------*/
         public  node()
@@ -69,6 +69,36 @@ namespace StoryGraphBuilder
              con_box_in = new Panel();
         }
 
+        public void set_param_panel(ref Panel _ref_panel)
+        {
+            parameter_panel = _ref_panel;
+        }
+
+       public  bool is_clicked = false;
+        public Point click_point;
+        public void on_down_plane(Object sender, EventArgs e)
+        {
+            is_clicked = true;
+            click_point = render_panel.PointToClient(Cursor.Position);
+        }
+        public void on_up_plane(Object sender, EventArgs e)
+        {
+            is_clicked = false;
+        }
+        public void on_move_plane(Object sender, EventArgs e)
+        {
+          //TODO FIX
+          //TODO add to render plane in node cs self and deleting self
+          //TODO ID GENERATOR
+            if (is_clicked)
+            {
+                if (display_panel == null) { return; }
+                this.pos_x = display_panel.PointToClient(Cursor.Position).X - click_point.X +1;
+                this.pos_y = display_panel.PointToClient(Cursor.Position).Y - click_point.Y +1;
+                generate_propery_plane();
+            }
+        }
+
         public  void generate_propery_plane()
         {
 
@@ -80,6 +110,9 @@ namespace StoryGraphBuilder
             render_panel.Location = new Point(pos_x, pos_y);
             render_panel.Size = new Size(size_w, size_h);
             render_panel.BackColor = Color.PaleVioletRed;
+            render_panel.MouseDown += on_down_plane;
+            render_panel.MouseUp += on_up_plane;
+            render_panel.MouseMove += on_move_plane;
             //CREATE BUBBLE INPUT
             con_box_in.Size = new Size(con_box_size, con_box_size);
             con_box_in.Location = new Point((int)(size_w / 2f), size_h);
@@ -101,6 +134,7 @@ namespace StoryGraphBuilder
             //CREATE HEADLINE BOX
 
             headline.Text = headline_text;
+            headline.TextAlign = ContentAlignment.MiddleCenter;
             int hl_w = (int)(headline_text.Length * 12);
             int hl_h = (int)((headline.Font.SizeInPoints * 2f) * (1 + headline_text.Length / text_bumbruch_zeichen_line));
             if (hl_w > size_w) { hl_w = size_w; }
@@ -161,6 +195,47 @@ namespace StoryGraphBuilder
             render_panel.Size = new Size(size_w, size_h);
         }
 
+        public void param_click_save_btn(Object sender, EventArgs e)
+        {
+            parameter_panel.Controls.Clear();
+        }
+        public void param_message_box_change(Object sender, EventArgs e)
+        {
+            message_text = ((TextBox)sender).Text;
+            generate_propery_plane();
+          //  MessageBox.Show(message_text);
+        }
+
+        public void generate_param_panel()
+        {
+            if (parameter_panel == null) { return; }
+            //height width fixed
+            parameter_panel.Controls.Clear();
+            int controls_abstand_w = 10;
+            //HEADLINE LABEL
+            Label headline_param_panel = new Label();
+            headline_param_panel.TextAlign = ContentAlignment.MiddleCenter;
+            headline_param_panel.Text = headline_text;
+            headline_param_panel.Size = new Size(parameter_panel.Width - controls_abstand_w, (int)(headline_param_panel.Font.SizeInPoints *2));
+            parameter_panel.Controls.Add(headline_param_panel);
+            //ADD TEXTBOX FOR MESSAGE
+            TextBox message_box_param_panel = new TextBox();
+            message_box_param_panel.Multiline = true;
+            message_box_param_panel.Text = message_text;
+            message_box_param_panel.Location = new Point((int)(controls_abstand_w / 2.0f), parameter_panel.Size.Height-200 -40);
+            message_box_param_panel.Size = new Size(parameter_panel.Width - controls_abstand_w, 200);
+            message_box_param_panel.TextChanged += param_message_box_change;
+            parameter_panel.Controls.Add(message_box_param_panel);
+            //ADD SAVE BUTTON
+            Button save_btn_param_panel = new Button();
+            save_btn_param_panel.Size = new Size(parameter_panel.Size.Width - controls_abstand_w, 30);
+            save_btn_param_panel.Location = new Point((int)(controls_abstand_w/2.0f), parameter_panel.Size.Height - save_btn_param_panel.Size.Height - 2);
+            save_btn_param_panel.Text = "SAVE";
+            save_btn_param_panel.MouseClick += param_click_save_btn; //register event handler
+            parameter_panel.Controls.Add(save_btn_param_panel);
+        }
+
+
         public  void draw_node()
         {
 
@@ -192,6 +267,11 @@ namespace StoryGraphBuilder
         Label headline = new Label();
         Panel seperation_line_head_0;
         Panel con_box_in = new Panel();
+
+        public void set_param_panel(ref Panel _ref_panel)
+        {
+            parameter_panel = _ref_panel;
+        }
 
 
         public List<option_node_options> options = new List<option_node_options>();
@@ -275,6 +355,7 @@ namespace StoryGraphBuilder
             //CREATE HEADLINE BOX
 
             headline.Text = headline_text;
+            headline.TextAlign = ContentAlignment.MiddleCenter;
             int hl_w = (int)(headline_text.Length * 12);
             int hl_h = (int)((headline.Font.SizeInPoints * 2f) * (1 + headline_text.Length / text_bumbruch_zeichen_line));
             if (hl_w > size_w) { hl_w = size_w; }

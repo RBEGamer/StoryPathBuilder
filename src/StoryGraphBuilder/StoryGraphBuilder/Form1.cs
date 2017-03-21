@@ -31,8 +31,27 @@ namespace StoryGraphBuilder
             InitializeComponent();
           
             render_panel = panel2;
+            render_panel.MouseUp += disp_panel_mouse_up;
+
+        }
+
+        public void disp_panel_mouse_up(Object o, EventArgs e)
+        {
+            foreach (Control n in render_panel.Controls)
+            {
 
 
+                switch (n.GetType().Name)
+                {
+                    case "node": break;
+                    case "text_node":
+                        (node_to_set as text_node).is_clicked = false ;
+                        
+                        break;
+                   // case "option_node": (node_to_set as option_node).generate_propery_plane(); break;
+                    default: break;
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -46,14 +65,16 @@ namespace StoryGraphBuilder
         {
            
             node n = new text_node();
-            (n as text_node).generate_propery_plane();
+            (n as text_node).set_param_panel(ref p_panel);
+            (n as text_node).display_panel = panel2;
             node_to_set = n;
         }
         //ADD OPTION
         private void button2_Click(object sender, EventArgs e)
         {
             node n = new option_node();
-            (n as option_node).generate_propery_plane();
+            (n as option_node).set_param_panel(ref p_panel);
+          //  (n as option_node).display_panel = panel2;
             node_to_set = n;
         }
         //REMOVE NODE
@@ -67,7 +88,7 @@ namespace StoryGraphBuilder
 
         }
 
-
+        
 
         private void panel2_Click(object sender, EventArgs e)
         {
@@ -80,7 +101,9 @@ namespace StoryGraphBuilder
                 switch (node_to_set.GetType().Name)
                 {
                     case "node": break;
-                    case "text_node": (node_to_set as text_node).generate_propery_plane(); break;
+                    case "text_node": (node_to_set as text_node).generate_propery_plane();
+                                      (node_to_set as text_node).generate_param_panel();
+                                       break;
                     case "option_node": (node_to_set as option_node).generate_propery_plane(); break;
                     default: break;
                 }
