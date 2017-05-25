@@ -22,7 +22,7 @@ namespace StoryGraphBuilder
 
         public Panel parameter_panel = null;
         public Panel display_panel = null;
-
+        public Bitmap generated_bitmap = null;
         protected int con_box_size = 10;
         protected int text_bumbruch_zeichen_line = 5; //new line >30 chars
 
@@ -31,6 +31,13 @@ namespace StoryGraphBuilder
         {
             render_panel = new Panel();
             headline_text = "-NODE-";
+            message_text = "---";
+        }
+
+        public node(ref Panel _ren_panel)
+        {
+            render_panel = _ren_panel;
+            headline_text = "-NODE RP-";
             message_text = "---";
         }
 
@@ -69,6 +76,25 @@ namespace StoryGraphBuilder
              con_box_in = new Panel();
         }
 
+        public text_node(ref Panel disp_pan)
+        {
+            display_panel = disp_pan;
+            render_panel = new Panel();
+            headline_text = "-TEXTNODE-";
+            message_text = "---";
+
+            con_box_out = new Panel();
+            seperation_line_message = new Panel();
+            message_text_l = new Label();
+            seperation_line_head_1 = new Panel();
+            headline = new Label();
+            seperation_line_head_0 = new Panel();
+            con_box_in = new Panel();
+
+            render_panel.MouseUp += on_up_plane;
+            render_panel.MouseDown += on_down_plane;
+        }
+
         public void set_param_panel(ref Panel _ref_panel)
         {
             parameter_panel = _ref_panel;
@@ -78,11 +104,17 @@ namespace StoryGraphBuilder
         public Point click_point;
         public void on_down_plane(Object sender, EventArgs e)
         {
+            generate_propery_plane();
             is_clicked = true;
+            Console.WriteLine("down");
+         //   MessageBox.Show("DONW");
             click_point = render_panel.PointToClient(Cursor.Position);
+            
         }
         public void on_up_plane(Object sender, EventArgs e)
         {
+            Console.WriteLine("up");
+           // MessageBox.Show("UP");
             is_clicked = false;
         }
         public void on_move_plane(Object sender, EventArgs e)
@@ -93,9 +125,9 @@ namespace StoryGraphBuilder
             if (is_clicked)
             {
                 if (display_panel == null) { return; }
-                this.pos_x = display_panel.PointToClient(Cursor.Position).X - click_point.X +1;
-                this.pos_y = display_panel.PointToClient(Cursor.Position).Y - click_point.Y +1;
-                generate_propery_plane();
+                this.pos_x = display_panel.PointToClient(Cursor.Position).X - click_point.X;
+                this.pos_y = display_panel.PointToClient(Cursor.Position).Y - click_point.Y -5;
+               
             }
         }
 
@@ -197,7 +229,7 @@ namespace StoryGraphBuilder
 
         public void param_click_save_btn(Object sender, EventArgs e)
         {
-            parameter_panel.Controls.Clear();
+       //     parameter_panel.Controls.Clear();
         }
         public void param_message_box_change(Object sender, EventArgs e)
         {
@@ -238,6 +270,7 @@ namespace StoryGraphBuilder
 
         public  void draw_node()
         {
+            Bitmap tmp = new Bitmap(render_panel.Size.Width, render_panel.Size.Height);
 
         }
     }

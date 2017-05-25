@@ -48,7 +48,7 @@ namespace StoryGraphBuilder
                         (node_to_set as text_node).is_clicked = false ;
                         
                         break;
-                   // case "option_node": (node_to_set as option_node).generate_propery_plane(); break;
+                    case "option_node": (node_to_set as option_node).generate_propery_plane(); break;
                     default: break;
                 }
             }
@@ -64,7 +64,7 @@ namespace StoryGraphBuilder
         private void button1_Click(object sender, EventArgs e)
         {
            
-            node n = new text_node();
+            node n = new text_node(ref render_panel);
             (n as text_node).set_param_panel(ref p_panel);
             (n as text_node).display_panel = panel2;
             node_to_set = n;
@@ -109,7 +109,7 @@ namespace StoryGraphBuilder
                 }
 
                 
-                render_panel.Controls.Add(node_to_set.render_panel);
+                render_panel.Controls.Add(node_to_set.generated_bitmap);
 
                 node_to_set = null;
             }
