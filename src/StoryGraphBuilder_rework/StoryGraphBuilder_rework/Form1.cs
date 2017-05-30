@@ -18,50 +18,42 @@ namespace StoryGraphBuilder_rework
         }
 
 
+//TODO FUNC SAVE
+
+//TODO FUNCA LOAD
+//SEND node_id_counter to highed founf +1
+
+//TODO ADD PRPERTY PLANE
 
         Graphics graphics;
         Bitmap drawing_bitmap;
-
-
-
-        node t;
         String node_to_add_name = ""; //if not null this node will be added on th enext click
-        public List<node> nodes_list = new List<node>();
-        private long nodes_id_counter = 0;
+        public List<node> nodes_list = new List<node>(); //a list of all og our nodes
+        private long nodes_id_counter = 0; //each node has a unique id so a simple counter
         private void Form1_Load(object sender, EventArgs e)
         {
             nodes_id_counter = 0;
-
             drawing_bitmap = new Bitmap(main_display_pic_box.Width, main_display_pic_box.Height);
             graphics = Graphics.FromImage(drawing_bitmap);
-
             main_display_pic_box.Focus();
-            
             //CLEAR
             graphics.FillRectangle(Brushes.DarkGray, 0, 0, drawing_bitmap.Width, drawing_bitmap.Height);
             main_display_pic_box.Image = drawing_bitmap;
-
-
-
             draw_g_to_pic_box();
         }
 
 
         public void draw_g_to_pic_box()
         {
-            main_display_pic_box.Focus();
-            graphics = Graphics.FromImage(drawing_bitmap);
+            //main_display_pic_box.Focus();
+            graphics = Graphics.FromImage(drawing_bitmap); //is ness ?
             main_display_pic_box.Image = drawing_bitmap;
-
-
+            //call the draw func of each node
+            //the node will do the clipping
             for (int i = 0; i < nodes_list.Count; i++)
             {
                nodes_list[i].draw_to_graphics(ref graphics);
             }
-
-
-
-
         }
         //EVENT FÜR AUF EINE NODE CLICKEN
         private void main_display_pic_box_Click(object sender, EventArgs e)
@@ -80,7 +72,6 @@ namespace StoryGraphBuilder_rework
                         break;
                 }
                 node_to_add_name = "";
-
             }
             else
             {
@@ -90,11 +81,11 @@ namespace StoryGraphBuilder_rework
                     nodes_list[i].mouse_click(main_display_pic_box.PointToClient(MousePosition));
                 }
             }
-
             //LAST DRAW NODE
             draw_g_to_pic_box();
         }
-
+        
+        //IF WE WANT TO ADD A NEW NODE SIMPLY set the vat to the node name
         private void btn_add_text_node_Click(object sender, EventArgs e)
         {
             node_to_add_name = "textnode";
