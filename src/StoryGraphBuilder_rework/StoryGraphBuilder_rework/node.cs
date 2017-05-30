@@ -11,8 +11,8 @@ namespace StoryGraphBuilder_rework
 {
     public class node
     {
-        public long id;
-        private Graphics g;
+        public long id; //unique node id
+        private Graphics g; //grafics ref for rendering
         public Point anchor; //draw pivot
         public Size node_size; //size of the node panel
         public Rectangle draw_in_rect; //needed for clipping
@@ -21,11 +21,7 @@ namespace StoryGraphBuilder_rework
         public bool has_panel_changed = true; //drw need update
         public Panel property_panel; //panel for settings
 
-
-
-
-
-
+        //BASIC CONST TO SET IMPORTANT VARS LIKE ID POS SIZE
         public node(long _id,ref Graphics _g, Point _anchor, Rectangle _draw_in_rect)
         {
             id = _id;
@@ -38,7 +34,7 @@ namespace StoryGraphBuilder_rework
             node_size = node_panel.Size;
             node_panel.BackColor = Color.Red;
         }
-
+        //CREATES A BITMAP OF THE NODE
         public Bitmap create_node_bitmap()
         {
             if (has_panel_changed)
@@ -50,7 +46,7 @@ namespace StoryGraphBuilder_rework
             }
             return node_bitmap_to_display;
         }
-
+        //IF NODE IS DISPLAY SPACE (CLIPPING) CREATE A BITMAP AND RENDERT IT TO THE GRAFICS REF
         public void draw_to_graphics(ref Graphics _g)
         {
             //simple clipping
@@ -67,16 +63,13 @@ namespace StoryGraphBuilder_rework
         }
 
 
-
-
         public void mouse_click(Point _p)
         {
- 
+            //IS CLICK IN NODE
             if (intersects_with_node(_p))
             {
                 Console.WriteLine("mouse_click on " + id.ToString());
                 //TODO SHOW PARAMETER PANEL
-
             }
         }
 
@@ -120,7 +113,6 @@ namespace StoryGraphBuilder_rework
         Panel con_box_in;
 
 
-
         public text_node(long _id, ref Graphics _g, Point _anchor, Rectangle _draw_in_rect) : base( _id, ref  _g,  _anchor,  _draw_in_rect)
         {
             
@@ -145,10 +137,7 @@ namespace StoryGraphBuilder_rework
         {
             int size_h = 0;
             int size_w = 200;
-
-           
-
-                                                      //CREATE PANEL BOX
+             //CREATE PANEL BOX
             node_panel.Controls.Clear();
             node_panel.Location = anchor;
             node_panel.Size = new Size(size_w, size_h);
@@ -174,9 +163,7 @@ namespace StoryGraphBuilder_rework
                 node_panel.Controls.Add(seperation_line_head_0);
                 size_h += 5;
             }
-
             //CREATE HEADLINE BOX
-
             headline.Text = headline_text;
             headline.TextAlign = ContentAlignment.MiddleCenter;
             int hl_w = (int)(headline_text.Length * 12);
@@ -187,7 +174,6 @@ namespace StoryGraphBuilder_rework
             size_h += hl_h; //increase box size
             headline.Enabled = true;
             node_panel.Controls.Add(headline);
-
             //CREATE LINE
             {
                 size_h += 2;
@@ -198,8 +184,6 @@ namespace StoryGraphBuilder_rework
                 node_panel.Controls.Add(seperation_line_head_1);
                 size_h += 5;
             }
-
-
             //CREATE TEXT BOX
             if (message_text_l == null) { message_text_l = new Label(); }
             message_text_l.Text = message_text;
@@ -211,9 +195,6 @@ namespace StoryGraphBuilder_rework
             size_h += me_h; //increase box size
             message_text_l.Enabled = true;
             node_panel.Controls.Add(message_text_l);
-
-
-
             //CREATE LINE
             {
                 size_h += 2;
@@ -233,9 +214,7 @@ namespace StoryGraphBuilder_rework
             size_h += con_box_size;
             node_panel.Controls.Add(con_box_out);
             //TODO REGISTER CLICK EVENT
-
-
-            //ADJUST THE PANEL SIZE
+            //ADJUST THE PANEL SIZE IMPORTANT FOR CORRECT DISPLAYING!
             node_panel.Size = new Size(size_w, size_h);
             node_panel.Location = anchor;
             has_panel_changed = true;
@@ -243,7 +222,7 @@ namespace StoryGraphBuilder_rework
 
         public void generate_prperty_panel()
         {
-
+    //TODO ADD
             has_panel_changed = true;
         }
 
