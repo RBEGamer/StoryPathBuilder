@@ -12,7 +12,8 @@ The Tool Supports the .strings export for easy localisation.
 * simple local possibilities with .string files
 
 
-# INSTALLATION
+# SOURCE
+Please use for cloning the source the rework folder : `/src/StoryGraphBuilder_rework/`
 
 
 
