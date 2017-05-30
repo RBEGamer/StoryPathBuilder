@@ -65,7 +65,9 @@ namespace StoryGraphBuilder_rework
                 switch (node_to_add_name)
                 {
                     case "textnode":
-                        nodes_list.Add(new text_node(nodes_id_counter++, ref graphics, main_display_pic_box.PointToClient(MousePosition), new Rectangle(main_display_pic_box.Location.X, main_display_pic_box.Location.Y, main_display_pic_box.Width, main_display_pic_box.Height)));
+                    text_node t = new text_node(nodes_id_counter++, ref graphics, main_display_pic_box.PointToClient(MousePosition), new Rectangle(main_display_pic_box.Location.X, main_display_pic_box.Location.Y, main_display_pic_box.Width, main_display_pic_box.Height));
+                       //TODO REGISTER CLICK EVENTS
+                        nodes_list.Add(t);
                         break;
                     default:
                         MessageBox.Show("Invalid node type");
