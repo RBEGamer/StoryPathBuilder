@@ -27,3 +27,11 @@ Please use for cloning the source the rework folder : `/src/StoryGraphBuilder_re
 # IMAGES
 ## FIRST VERION
 ![Gopher image](/documentation/images/sgb_v001.PNG)
+
+
+
+
+
+
+# Donate
+[![paypal](https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8D2PEDQ27UJ9Y)
